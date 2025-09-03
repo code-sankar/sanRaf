@@ -125,7 +125,7 @@ const Navbar = () => {
               <Laptop className="text-[#2563EB] w-8 h-8" />
               <div>
                 <h1 className="text-xl md:text-2xl font-bold text-[#1E1E1E] tracking-wide">
-                  YourCompany
+                  Sankar and Rafel
                 </h1>
                 <p className="text-xs text-gray-500 italic">
                   Software & Web Development
