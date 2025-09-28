@@ -11,9 +11,6 @@ import Footer from "../components/Home/Footer.jsx";
 const Home = () => {
   return (
     <div>
-      <section>
-        <Navbar />
-      </section>
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
         {/* Hero Section */}
         <section>
@@ -45,9 +42,6 @@ const Home = () => {
           <CTASection />
         </section>
       </div>
-      <section>
-        <Footer />
-      </section>
     </div>
   );
 };

@@ -19,14 +19,14 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const navbarRef = useRef(null);
+  const submenuRefs = useRef([]);
 
   const backgroundImages = [
-  "https://cdn.pixabay.com/photo/2018/09/09/18/04/judge-3665164_640.jpg",
-  "https://cdn.pixabay.com/photo/2024/04/26/20/21/law-8722596_640.jpg",
-  "https://cdn.pixabay.com/photo/2022/04/10/16/41/lawyer-7123798_640.jpg",
-  "https://cdn.pixabay.com/photo/2023/12/12/09/18/criminal-8444883_640.jpg",
-];
-
+    "https://cdn.pixabay.com/photo/2018/09/09/18/04/judge-3665164_640.jpg",
+    "https://cdn.pixabay.com/photo/2024/04/26/20/21/law-8722596_640.jpg",
+    "https://cdn.pixabay.com/photo/2022/04/10/16/41/lawyer-7123798_640.jpg",
+    "https://cdn.pixabay.com/photo/2023/12/12/09/18/criminal-8444883_640.jpg",
+  ];
 
   // Time effect
   useEffect(() => {
@@ -63,11 +63,15 @@ const Navbar = () => {
     {
       name: "Services",
       submenu: [
-        { name: "Web Development", href: "#web" },
-        { name: "Mobile Apps", href: "#apps" },
-        { name: "UI/UX Design", href: "#design" },
-        { name: "Cloud & DevOps", href: "#cloud" },
-        { name: "AI Solutions", href: "#ai" },
+        { name: "Web Development", href: "/web" },
+        { name: "Mobile Apps", href: "/apps" },
+        { name: "UI/UX Design", href: "/design" },
+        { name: "Cybersecurity", href: "/cybersecurity" },
+        { name: "Data Analytics", href: "/analytics" },
+        { name: "Cloud & DevOps", href: "/cloud" },
+        { name: "AI & Machine Learning", href: "/ai" },
+        { name: "Blockchain Solutions", href: "/blockchain" },
+        { name: "QA & Testing", href: "/testing" },
       ],
     },
     {
@@ -77,13 +81,21 @@ const Navbar = () => {
         { name: "Client Projects", href: "#projects" },
       ],
     },
-    { name: "Technologies", href: "#tech" },
-    { name: "Blog", href: "#blog" },
-    { name: "Contact", href: "#contact" },
+    { name: "Technologies", href: "/tech" },
+    { name: "Blog", href: "/blog" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const toggleSubmenu = (index) =>
     setOpenSubmenu(openSubmenu === index ? null : index);
+
+  // Function to handle mouse leave from submenu
+  const handleSubmenuMouseLeave = (index) => {
+    // Add a small delay to prevent immediate closing when moving between menu items
+    setTimeout(() => {
+      setOpenSubmenu((prev) => (prev === index ? null : prev));
+    }, 300);
+  };
 
   return (
     <header ref={navbarRef}>
@@ -137,7 +149,17 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center space-x-8">
               <ul className="flex space-x-6 text-[15px] font-medium text-[#1E1E1E]">
                 {navItems.map((item, index) => (
-                  <li key={item.name} className="relative group">
+                  <li
+                    key={item.name}
+                    className="relative group"
+                    onMouseEnter={() => {
+                      if (item.submenu) setOpenSubmenu(index);
+                    }}
+                    onMouseLeave={() => {
+                      if (item.submenu) handleSubmenuMouseLeave(index);
+                    }}
+                    ref={(el) => (submenuRefs.current[index] = el)}
+                  >
                     {item.submenu ? (
                       <>
                         <button
@@ -157,6 +179,7 @@ const Navbar = () => {
                           className={`absolute left-0 top-full ${
                             openSubmenu === index ? "block" : "hidden"
                           } mt-0 bg-white border border-gray-200 rounded-md shadow-lg w-56 z-10`}
+                          onMouseLeave={() => handleSubmenuMouseLeave(index)}
                         >
                           {item.submenu.map((sub) => (
                             <li key={sub.name}>

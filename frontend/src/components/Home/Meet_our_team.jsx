@@ -134,7 +134,7 @@ const TeamSection = () => {
                 >
                   <div className="h-56 bg-gray-200">
                     <img
-                      src={member.image}
+                      src={null}
                       alt={member.name}
                       className="w-full h-full object-cover"
                       onError={(e) =>
