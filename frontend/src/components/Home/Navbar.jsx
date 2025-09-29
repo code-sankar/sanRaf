@@ -59,7 +59,7 @@ const Navbar = () => {
 
   // Menu Items for Software Dev Company
   const navItems = [
-    { name: "Home", href: "#home", exact: true },
+    { name: "Home", href: "/home", exact: true },
     {
       name: "Services",
       submenu: [
@@ -77,8 +77,8 @@ const Navbar = () => {
     {
       name: "Portfolio",
       submenu: [
-        { name: "Case Studies", href: "#cases" },
-        { name: "Client Projects", href: "#projects" },
+        { name: "Case Studies", href: "/cases" },
+        { name: "Client Projects", href: "/projects" },
       ],
     },
     { name: "Technologies", href: "/tech" },
@@ -207,7 +207,7 @@ const Navbar = () => {
               </ul>
               <div className="flex gap-3">
                 <a
-                  href="#contact"
+                  href="contact"
                   className="bg-[#2563EB] text-white hover:bg-[#1E40AF] px-5 py-2 rounded text-sm shadow-sm transition-colors duration-300 flex items-center"
                 >
                   <Code className="w-4 h-4 mr-2" />
