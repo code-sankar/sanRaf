@@ -11,64 +11,80 @@ import {
   Bug,
   Blocks,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Practice_areas = () => {
+  const navigate = useNavigate();
+
   const practiceAreas = [
     {
       icon: <Code2 className="h-8 w-8 text-indigo-600" />,
       title: "Web Development",
+      path: "/web",
       description:
         "Building responsive, fast, and scalable web apps using modern frameworks like React, Next.js, and Node.js.",
     },
     {
       icon: <Smartphone className="h-8 w-8 text-indigo-600" />,
       title: "Mobile App Development",
+      path: "/apps",
       description:
         "Cross-platform and native apps with seamless performance, delivering exceptional user experiences.",
     },
     {
       icon: <Cloud className="h-8 w-8 text-indigo-600" />,
       title: "Cloud Solutions",
+      path: "/cloud",
       description:
         "End-to-end cloud services including migration, DevOps automation, and scalable infrastructure setup.",
     },
     {
       icon: <Database className="h-8 w-8 text-indigo-600" />,
       title: "Data & Analytics",
+      path: "/analytics",
       description:
         "Turning raw data into actionable insights with AI-driven dashboards, analytics, and ML models.",
     },
     {
       icon: <BrainCircuit className="h-8 w-8 text-indigo-600" />,
       title: "AI & Machine Learning",
+      path: "/ai",
       description:
         "Custom AI solutions like chatbots, recommendation systems, and predictive analytics to boost efficiency.",
     },
     {
       icon: <Palette className="h-8 w-8 text-indigo-600" />,
-      title: "UI/UX Design",
+      title: "design",
+      path: "/services/ui-ux-design",
       description:
         "Crafting intuitive, user-friendly interfaces with pixel-perfect designs and delightful experiences.",
     },
     {
       icon: <Bug className="h-8 w-8 text-indigo-600" />,
       title: "QA & Testing",
+      path: "/testing",
       description:
         "Comprehensive manual and automated testing ensuring flawless performance and security.",
     },
     {
       icon: <Blocks className="h-8 w-8 text-indigo-600" />,
       title: "Blockchain Solutions",
+      path: "/blockchain",
       description:
         "Secure, decentralized applications and smart contracts for fintech, supply chain, and beyond.",
     },
     {
       icon: <Lock className="h-8 w-8 text-indigo-600" />,
       title: "Cybersecurity",
+      path: "/cybersecurity",
       description:
         "End-to-end security strategies, penetration testing, and compliance to safeguard your systems.",
     },
   ];
+
+  const handleLearnMore = (path) => {
+    navigate(path);
+  };
 
   return (
     <section id="services" className="py-20 bg-white">
@@ -102,7 +118,8 @@ const Practice_areas = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.15 }}
               viewport={{ once: true }}
-              className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+              className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
+              onClick={() => handleLearnMore(area.path)}
             >
               <div className="mb-4 p-3 inline-block rounded-full bg-indigo-100 group-hover:bg-indigo-200 transition-colors">
                 {area.icon}
@@ -113,7 +130,13 @@ const Practice_areas = () => {
               <p className="text-gray-600 text-sm leading-relaxed">
                 {area.description}
               </p>
-              <button className="group mt-4 text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1 transition-colors">
+              <button 
+                className="group mt-4 text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleLearnMore(area.path);
+                }}
+              >
                 Learn more
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
               </button>

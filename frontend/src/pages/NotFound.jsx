@@ -1,91 +1,144 @@
 import React from 'react';
-import { Home, ArrowLeft, Search, Code, Mail } from 'lucide-react';
+import { Home, ArrowLeft, Search, Code, Mail, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 function NotFound() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 text-center">
-        <div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-100 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl w-full flex flex-col lg:flex-row items-center justify-between space-y-12 lg:space-y-0 lg:space-x-12">
+        {/* Left Content Section */}
+        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left space-y-8">
           {/* Animated 404 text */}
           <div className="relative">
-            <h1 className="text-9xl font-bold text-blue-600 opacity-20">404</h1>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <Code className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-                <h2 className="text-3xl font-extrabold text-gray-900">Page Not Found</h2>
+            <h1 className="text-8xl sm:text-9xl font-bold text-blue-600 opacity-20">404</h1>
+            <div className="absolute inset-0 flex items-center justify-center lg:justify-start">
+              <div className="text-center lg:text-left">
+                <Code className="w-16 h-16 text-blue-600 mx-auto lg:mx-0 mb-4" />
+                <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900">Page Not Found</h2>
               </div>
             </div>
           </div>
           
-          <p className="mt-8 text-xl text-gray-600">
-            Oops! The page you're looking for seems to have wandered off into the digital void.
-          </p>
-          <p className="mt-2 text-gray-500">
-            Don't worry, our team of developers is on it. In the meantime, let's get you back on track.
-          </p>
-        </div>
-        
-        <div className="mt-10 space-y-4">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => navigate('/')}
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
-            >
-              <Home className="w-5 h-5 mr-2" />
-              Go Home
-            </button>
-            
-            <button
-              onClick={() => navigate(-1)}
-              className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              Go Back
-            </button>
+          <div className="space-y-4">
+            <p className="text-xl text-gray-600 leading-relaxed">
+              Oops! The page you're looking for seems to have wandered off into the digital void.
+            </p>
+            <p className="text-lg text-gray-500 leading-relaxed">
+              Don't worry, our team of developers is on it. In the meantime, let's get you back on track.
+            </p>
           </div>
           
-          <div className="pt-8">
-            <p className="text-gray-500 mb-4">Still need help?</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 transition-colors"
+          {/* Action Buttons */}
+          <div className="w-full space-y-6 pt-4">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={() => navigate('/')}
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-all duration-200 transform hover:-translate-y-1 shadow-lg hover:shadow-xl"
               >
-                <Mail className="w-4 h-4 mr-2" />
-                Contact Support
-              </a>
+                <Home className="w-5 h-5 mr-2" />
+                Go Home
+              </button>
               
-              <a
-                href="#services"
-                className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+              <button
+                onClick={() => navigate(-1)}
+                className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-all duration-200 transform hover:-translate-y-1 shadow-md hover:shadow-lg"
               >
-                <Search className="w-4 h-4 mr-2" />
-                Browse Services
-              </a>
+                <ArrowLeft className="w-5 h-5 mr-2" />
+                Go Back
+              </button>
+            </div>
+            
+            <div className="pt-4">
+              <p className="text-gray-500 mb-4">Still need help?</p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="#contact"
+                  className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-blue-700 bg-blue-100 hover:bg-blue-200 transition-all duration-200"
+                >
+                  <Mail className="w-4 h-4 mr-2" />
+                  Contact Support
+                </a>
+                
+                <a
+                  href="#services"
+                  className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-all duration-200"
+                >
+                  <Search className="w-4 h-4 mr-2" />
+                  Browse Services
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          {/* Code Snippet */}
+          <div className="w-full mt-8">
+            <div className="relative">
+              <div className="absolute -inset-4">
+                <div className="w-full h-full mx-auto rotate-0 opacity-70 blur-lg filter">
+                  <div className="h-24 bg-blue-600 opacity-20 animate-pulse-slow rounded-lg"></div>
+                </div>
+              </div>
+              <div className="relative bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <p className="text-sm text-gray-500 font-mono text-left">
+                  <span className="text-blue-600">// TODO: Find missing page</span><br />
+                  <span className="text-red-500">// Error 404: Page not found</span><br />
+                  <span className="text-green-600">// Redirecting to safety...</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
-        
-        {/* Fun animation */}
-        <div className="mt-16">
-          <div className="relative">
-            <div className="absolute -inset-4">
-              <div className="w-full h-full mx-auto rotate-0 opacity-70 blur-lg filter">
-                <div className="h-24 bg-blue-600 opacity-20 animate-pulse-slow rounded-lg"></div>
-              </div>
-            </div>
-            <div className="relative bg-white p-6 rounded-lg shadow-md border border-gray-200">
-              <p className="text-sm text-gray-500">
-                <span className="font-mono">// TODO: Find missing page</span>
-                <br />
-                <span className="font-mono">// Error 404: Page not found</span>
-                <br />
-                <span className="font-mono">// Redirecting to safety...</span>
-              </p>
-            </div>
+
+        {/* Right Illustration Section */}
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8">
+          <div className="relative w-full max-w-lg">
+            {/* Background decoration */}
+            <div className="absolute -inset-8 bg-blue-200 rounded-full opacity-20 blur-3xl animate-pulse"></div>
+            
+            {/* SVG Illustration */}
+            <svg 
+              className="w-full text-blue-600 relative z-10 transform hover:scale-105 transition-transform duration-300" 
+              xmlns="http://www.w3.org/2000/svg" 
+              data-name="Layer 1" 
+              viewBox="0 0 1120.59226 777.91584"
+            >
+              <title>not found</title>
+              <circle cx="212.59226" cy="103" r="64" fill="#ff6584"></circle>
+              <path d="M563.68016,404.16381c0,151.01141-89.77389,203.73895-200.51559,203.73895S162.649,555.17522,162.649,404.16381,363.16457,61.04208,363.16457,61.04208,563.68016,253.1524,563.68016,404.16381Z" transform="translate(-39.70387 -61.04208)" fill="#cbd5e1"></path>
+              <polygon points="316.156 523.761 318.21 397.378 403.674 241.024 318.532 377.552 319.455 320.725 378.357 207.605 319.699 305.687 319.699 305.687 321.359 203.481 384.433 113.423 321.621 187.409 322.658 0 316.138 248.096 316.674 237.861 252.547 139.704 315.646 257.508 309.671 371.654 309.493 368.625 235.565 265.329 309.269 379.328 308.522 393.603 308.388 393.818 308.449 394.99 293.29 684.589 313.544 684.589 315.974 535.005 389.496 421.285 316.156 523.761" fill="#3f3d56"></polygon>
+              <path d="M1160.29613,466.01367c0,123.61-73.4842,166.77-164.13156,166.77s-164.13156-43.16-164.13156-166.77S996.16457,185.15218,996.16457,185.15218,1160.29613,342.40364,1160.29613,466.01367Z" transform="translate(-39.70387 -61.04208)" fill="#cbd5e1"></path>
+              <polygon points="950.482 552.833 952.162 449.383 1022.119 321.4 952.426 433.154 953.182 386.639 1001.396 294.044 953.382 374.329 953.382 374.329 954.741 290.669 1006.369 216.952 954.954 277.514 955.804 124.11 950.467 327.188 950.906 318.811 898.414 238.464 950.064 334.893 945.173 428.327 945.027 425.847 884.514 341.294 944.844 434.608 944.232 446.293 944.123 446.469 944.173 447.428 931.764 684.478 948.343 684.478 950.332 562.037 1010.514 468.952 950.482 552.833" fill="#3f3d56"></polygon>
+              <ellipse cx="554.59226" cy="680.47903" rx="554.59226" ry="28.03433" fill="#3f3d56"></ellipse>
+              <ellipse cx="892.44491" cy="726.79663" rx="94.98858" ry="4.80162" fill="#3f3d56"></ellipse>
+              <ellipse cx="548.71959" cy="773.11422" rx="94.98858" ry="4.80162" fill="#3f3d56"></ellipse>
+              <ellipse cx="287.94432" cy="734.27887" rx="217.01436" ry="10.96996" fill="#3f3d56"></ellipse>
+              <circle cx="97.08375" cy="566.26982" r="79" fill="#2f2e41"></circle>
+              <rect x="99.80546" y="689.02332" width="24" height="43" transform="translate(-31.32451 -62.31008) rotate(0.67509)" fill="#2f2e41"></rect>
+              <rect x="147.80213" y="689.58887" width="24" height="43" transform="translate(-31.31452 -62.87555) rotate(0.67509)" fill="#2f2e41"></rect>
+              <ellipse cx="119.54569" cy="732.61606" rx="7.5" ry="20" transform="translate(-654.1319 782.47948) rotate(-89.32491)" fill="#2f2e41"></ellipse>
+              <ellipse cx="167.55414" cy="732.18168" rx="7.5" ry="20" transform="translate(-606.25475 830.05533) rotate(-89.32491)" fill="#2f2e41"></ellipse>
+              <circle cx="99.31925" cy="546.29477" r="27" fill="#fff"></circle>
+              <circle cx="99.31925" cy="546.29477" r="9" fill="#3f3d56"></circle>
+              <path d="M61.02588,552.94636c-6.04185-28.64075,14.68758-57.26483,46.30049-63.93367s62.13813,11.14292,68.18,39.78367-14.97834,38.93-46.59124,45.59886S67.06774,581.58712,61.02588,552.94636Z" transform="translate(-39.70387 -61.04208)" fill="currentColor"></path>
+              <path d="M257.29613,671.38411c0,55.07585-32.73985,74.3063-73.13,74.3063q-1.40351,0-2.80255-.0312c-1.87139-.04011-3.72494-.1292-5.55619-.254-36.45135-2.57979-64.77127-22.79937-64.77127-74.02113,0-53.00843,67.73872-119.89612,72.827-124.84633l.00892-.00889c.19608-.19159.29409-.28516.29409-.28516S257.29613,616.30827,257.29613,671.38411Z" transform="translate(-39.70387 -61.04208)" fill="currentColor"></path>
+              <path d="M181.50168,737.26482l26.747-37.37367-26.81386,41.4773-.07125,4.29076c-1.87139-.04011-3.72494-.1292-5.55619-.254l2.88282-55.10258-.0223-.42775.049-.0802.27179-5.20415-26.88076-41.5798,26.96539,37.67668.06244,1.105,2.17874-41.63324-23.0132-42.96551,23.29391,35.6583,2.26789-86.31419.00892-.294v.28516l-.37871,68.064,22.91079-26.98321-23.00435,32.84678-.60595,37.27566L204.18523,621.958l-21.4805,41.259-.33863,20.723,31.05561-49.79149-31.17146,57.023Z" transform="translate(-39.70387 -61.04208)" fill="#3f3d56"></path>
+              <circle cx="712.48505" cy="565.41532" r="79" fill="#2f2e41"></circle>
+              <rect x="741.77716" y="691.82355" width="24" height="43" transform="translate(-215.99457 191.86399) rotate(-17.08345)" fill="#2f2e41"></rect>
+              <rect x="787.6593" y="677.72286" width="24" height="43" transform="matrix(0.95588, -0.29376, 0.29376, 0.95588, -209.82788, 204.72037)" fill="#2f2e41"></rect>
+              <ellipse cx="767.887" cy="732.00275" rx="20" ry="7.5" transform="translate(-220.8593 196.83312) rotate(-17.08345)" fill="#2f2e41"></ellipse>
+              <ellipse cx="813.47537" cy="716.94619" rx="20" ry="7.5" transform="translate(-214.42477 209.56103) rotate(-17.08345)" fill="#2f2e41"></ellipse>
+              <circle cx="708.52153" cy="545.71023" r="27" fill="#fff"></circle>
+              <circle cx="708.52153" cy="545.71023" r="9" fill="#3f3d56"></circle>
+              <path d="M657.35526,578.74316c-14.48957-25.43323-3.47841-59.016,24.59412-75.0092s62.57592-8.34055,77.06549,17.09268-2.39072,41.6435-30.46325,57.63671S671.84483,604.17639,657.35526,578.74316Z" transform="translate(-39.70387 -61.04208)" fill="currentColor"></path>
+              <path d="M611.29613,661.29875c0,50.55711-30.05368,68.20979-67.13,68.20979q-1.28835,0-2.57261-.02864c-1.71785-.03682-3.41933-.1186-5.10033-.23313-33.46068-2.36813-59.45707-20.92878-59.45707-67.948,0-48.65932,62.18106-110.05916,66.85186-114.60322l.00819-.00817c.18-.17587.27-.26177.27-.26177S611.29613,610.74164,611.29613,661.29875Z" transform="translate(-39.70387 -61.04208)" fill="currentColor"></path>
+              <path d="M541.72029,721.77424l24.55253-34.30732-24.6139,38.07426-.0654,3.93872c-1.71785-.03682-3.41933-.1186-5.10033-.23313l2.6463-50.58165-.02047-.39266.045-.07361.24949-4.77718-24.67531-38.16836,24.753,34.58547.05731,1.01433,2-38.21741-21.12507-39.44039L541.80616,625.928l2.08182-79.23247.00819-.26994v.26177l-.34764,62.47962,21.031-24.76934-21.11693,30.15184-.55624,34.21735,19.63634-32.839-19.71812,37.87389-.31085,19.0228,28.50763-45.70631-28.614,52.34448Z" transform="translate(-39.70387 -61.04208)" fill="#3f3d56"></path>
+              <path d="M875.29613,682.38411c0,55.07585-32.73985,74.3063-73.13,74.3063q-1.4035,0-2.80255-.0312c-1.87139-.04011-3.72494-.1292-5.55619-.254-36.45135-2.57979-64.77127-22.79937-64.77127-74.02113,0-53.00843,67.73872-119.89612,72.827-124.84633l.00892-.00889c.19608-.19159.29409-.28516.29409-.28516S875.29613,627.30827,875.29613,682.38411Z" transform="translate(-39.70387 -61.04208)" fill="currentColor"></path>
+              <path d="M799.50168,748.26482l26.747-37.37367-26.81386,41.4773-.07125,4.29076c-1.87139-.04011-3.72494-.1292-5.55619-.254l2.88282-55.10258-.0223-.42775.049-.0802.27179-5.20415L770.108,654.01076l26.96539,37.67668.06244,1.105,2.17874-41.63324-23.0132-42.96551,23.29391,35.6583,2.26789-86.31419.00892-.294v.28516l-.37871,68.064,22.91079-26.98321-23.00435,32.84678-.606,37.27566L822.18523,632.958l-21.4805,41.259-.33863,20.723,31.05561-49.79149-31.17146,57.023Z" transform="translate(-39.70387 -61.04208)" fill="#3f3d56"></path>
+              <ellipse cx="721.51694" cy="656.82212" rx="12.40027" ry="39.5" transform="translate(-220.83517 966.22323) rotate(-64.62574)" fill="#2f2e41"></ellipse>
+              <ellipse cx="112.51694" cy="651.82212" rx="12.40027" ry="39.5" transform="translate(-574.07936 452.71367) rotate(-68.15829)" fill="#2f2e41"></ellipse>
+            </svg>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
-import { StrictMode } from "react";
+import { React, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import ReactDOM from 'react-dom/client'
 import { Provider } from "react-redux";
 import "./index.css";
 import {
@@ -24,8 +25,6 @@ import Technologies from "./pages/Technologies.jsx";
 import Blogs from "./pages/Blogs.jsx";
 import Contact from "./pages/Contact.jsx";
 import Home from "./pages/Home.jsx";
-import Layout from "./Layout.jsx";
-
 
 const router = createBrowserRouter([
   {
@@ -96,7 +95,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   
     <RouterProvider router={router} />
   
