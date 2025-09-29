@@ -30,7 +30,7 @@ import Layout from "./Layout.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <App />,
     children: [
       {
         path: "/",

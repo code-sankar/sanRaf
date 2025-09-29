@@ -1,17 +1,19 @@
-import { useState } from "react";
+import Navbar from "./components/Home/Navbar.jsx";
+import Footer from "./components/Home/Footer.jsx";
+import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { icons } from "./assets/Icons.jsx";
+import { Bounce, ToastContainer } from "react-toastify";
+
 import Home from "./pages/Home.jsx";
 //import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      {/* <div className="min-h-screen flex flex-col">
-        <main className="flex-grow">
-          <Home />
-        </main>
-      </div> */}
+      <Navbar />
+      <Outlet />
+      <Footer />
     </>
   );
 }
