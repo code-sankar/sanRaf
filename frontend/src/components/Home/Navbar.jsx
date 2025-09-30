@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import moment from "moment-timezone";
 import {
   Menu,
@@ -20,6 +21,8 @@ const Navbar = () => {
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const navbarRef = useRef(null);
   const submenuRefs = useRef([]);
+
+  const location = useLocation();
 
   const backgroundImages = [
     "https://cdn.pixabay.com/photo/2018/09/09/18/04/judge-3665164_640.jpg",
@@ -59,7 +62,7 @@ const Navbar = () => {
 
   // Menu Items for Software Dev Company
   const navItems = [
-    { name: "Home", href: "/home", exact: true },
+    { name: "Home", href: "/", exact: true },
     {
       name: "Services",
       submenu: [
@@ -85,6 +88,19 @@ const Navbar = () => {
     { name: "Blog", href: "/blog" },
     { name: "Contact", href: "/contact" },
   ];
+
+  // Helper function to check if a link is active
+  const isActiveLink = (href, exact = false) => {
+    if (exact) {
+      return location.pathname === href;
+    }
+    return location.pathname.startsWith(href);
+  };
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   const toggleSubmenu = (index) =>
     setOpenSubmenu(openSubmenu === index ? null : index);
@@ -163,7 +179,11 @@ const Navbar = () => {
                     {item.submenu ? (
                       <>
                         <button
-                          className="flex items-center gap-1 hover:text-[#2563EB] transition py-2"
+                          className={`flex items-center gap-1 transition py-2 ${
+                            isActiveLink(item.href, item.exact)
+                              ? "text-[#2563EB] font-semibold"
+                              : "hover:text-[#2563EB]"
+                          }`}
                           onClick={() => toggleSubmenu(index)}
                           aria-expanded={openSubmenu === index}
                           aria-haspopup="true"
@@ -183,36 +203,48 @@ const Navbar = () => {
                         >
                           {item.submenu.map((sub) => (
                             <li key={sub.name}>
-                              <a
-                                href={sub.href}
-                                className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#2563EB] border-b border-gray-100 last:border-b-0"
+                              <Link
+                                to={sub.href}
+                                className={`block px-4 py-3 text-sm border-b border-gray-100 last:border-b-0 ${
+                                  isActiveLink(sub.href)
+                                    ? "bg-blue-50 text-[#2563EB] font-medium"
+                                    : "text-gray-700 hover:bg-gray-50 hover:text-[#2563EB]"
+                                }`}
                               >
                                 {sub.name}
-                              </a>
+                              </Link>
                             </li>
                           ))}
                         </ul>
                       </>
                     ) : (
-                      <a
-                        href={item.href}
-                        className="hover:text-[#2563EB] transition py-2 block"
-                        aria-current={item.exact ? "page" : undefined}
+                      <Link
+                        to={item.href}
+                        className={`hover:text-[#2563EB] transition py-2 block ${
+                          isActiveLink(item.href, item.exact)
+                            ? "text-[#2563EB] font-semibold"
+                            : ""
+                        }`}
+                        aria-current={
+                          isActiveLink(item.href, item.exact)
+                            ? "page"
+                            : undefined
+                        }
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     )}
                   </li>
                 ))}
               </ul>
               <div className="flex gap-3">
-                <a
-                  href="contact"
+                <Link
+                  to="/contact"
                   className="bg-[#2563EB] text-white hover:bg-[#1E40AF] px-5 py-2 rounded text-sm shadow-sm transition-colors duration-300 flex items-center"
                 >
                   <Code className="w-4 h-4 mr-2" />
                   Get a Quote
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -242,7 +274,11 @@ const Navbar = () => {
                 item.submenu ? (
                   <li key={item.name} className="border-b pb-2">
                     <button
-                      className="flex justify-between items-center w-full py-3 text-gray-800 font-medium"
+                      className={`flex justify-between items-center w-full py-3 font-medium ${
+                        isActiveLink(item.href, item.exact)
+                          ? "text-[#2563EB]"
+                          : "text-gray-800"
+                      }`}
                       onClick={() => toggleSubmenu(index)}
                       aria-expanded={openSubmenu === index}
                     >
@@ -259,26 +295,34 @@ const Navbar = () => {
                       }`}
                     >
                       {item.submenu.map((sub) => (
-                        <a
+                        <Link
                           key={sub.name}
-                          href={sub.href}
-                          className="block text-gray-700 hover:text-[#2563EB] py-2 text-sm"
+                          to={sub.href}
+                          className={`block py-2 text-sm ${
+                            isActiveLink(sub.href)
+                              ? "text-[#2563EB] font-medium"
+                              : "text-gray-700 hover:text-[#2563EB]"
+                          }`}
                           onClick={() => setMobileMenuOpen(false)}
                         >
                           {sub.name}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </li>
                 ) : (
                   <li key={item.name} className="border-b">
-                    <a
-                      href={item.href}
-                      className="block text-gray-800 hover:text-[#2563EB] py-3 font-medium"
+                    <Link
+                      to={item.href}
+                      className={`block py-3 font-medium ${
+                        isActiveLink(item.href, item.exact)
+                          ? "text-[#2563EB]"
+                          : "text-gray-800 hover:text-[#2563EB]"
+                      }`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 )
               )}
@@ -292,13 +336,13 @@ const Navbar = () => {
                 <Phone className="w-4 h-4" />
                 +91 98765 43210
               </a>
-              <a
-                href="#contact"
+              <Link
+                to="/contact"
                 className="block bg-[#2563EB] text-white text-center py-3 rounded font-medium shadow-sm"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Get a Quote
-              </a>
+              </Link>
             </div>
           </div>
         )}
