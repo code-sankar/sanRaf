@@ -25,6 +25,7 @@ import Technologies from "./pages/Technologies.jsx";
 import Blogs from "./pages/Blogs.jsx";
 import Contact from "./pages/Contact.jsx";
 import Home from "./pages/Home.jsx";
+import WhyUs from "./pages/Our_services/WhyUs.jsx";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact />,
       },
+      {
+        path: "/whyUs",
+        element: <WhyUs />
+      }
     ],
   },
   {

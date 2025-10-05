@@ -64,7 +64,7 @@ const Hero_section = () => {
 
   const features = [
     {
-      text: "Full-stack development",
+      text: "Software development",
       icon: <CheckCircle className="h-4 w-4" />,
     },
     { text: "24/7 support", icon: <CheckCircle className="h-4 w-4" /> },
@@ -222,9 +222,10 @@ const Hero_section = () => {
                 transition={{ duration: 0.8, delay: 0.5 }}
                 className="text-lg md:text-xl text-blue-100 leading-relaxed max-w-2xl"
               >
-                We craft cutting-edge software solutions, scalable web
-                platforms, and innovative mobile apps that drive business growth
-                and digital transformation.
+                Got a startup? We'll help you launch with impact. Have an idea?
+                We transform concepts into market-ready solutions. Running a
+                business? We optimize and accelerate your growth. Your success
+                is our journey—we're with you at every stage.
               </motion.p>
             </div>
 
@@ -253,14 +254,17 @@ const Hero_section = () => {
               transition={{ duration: 0.8, delay: 0.9 }}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <motion.button
+              <motion.a
+                href="/contact"
+                // target=""
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-white text-blue-900 hover:bg-blue-50 px-8 py-4 rounded-xl font-semibold transition-all shadow-2xl flex items-center gap-3 group"
               >
                 Start Your Project
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
+              </motion.a>
 
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -309,7 +313,7 @@ const Hero_section = () => {
               className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl overflow-hidden"
             >
               {/* Animated Background Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-600/10" />
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-green-600/10" />
 
               {/* Content */}
               <div className="relative z-10 space-y-6">
@@ -317,7 +321,7 @@ const Hero_section = () => {
                   <h3 className="text-2xl font-bold text-white mb-2">
                     Ready to Innovate?
                   </h3>
-                  <p className="text-blue-100">
+                  <p className="text-green-100">
                     Get a free project consultation
                   </p>
                 </div>
@@ -363,7 +367,7 @@ const Hero_section = () => {
 
                 <motion.button
                   whileHover={{ scale: 1.05 }}
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-4 rounded-xl font-semibold transition-all shadow-lg"
+                  className="w-full bg-gradient-to-r from-green-300 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-4 rounded-xl font-semibold transition-all shadow-lg"
                 >
                   Get Free Consultation
                 </motion.button>

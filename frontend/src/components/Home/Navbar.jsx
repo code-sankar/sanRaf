@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { href, Link, useLocation } from "react-router-dom";
 import moment from "moment-timezone";
 import {
   Menu,
@@ -24,12 +24,12 @@ const Navbar = () => {
 
   const location = useLocation();
 
-  const backgroundImages = [
-    "https://cdn.pixabay.com/photo/2018/09/09/18/04/judge-3665164_640.jpg",
-    "https://cdn.pixabay.com/photo/2024/04/26/20/21/law-8722596_640.jpg",
-    "https://cdn.pixabay.com/photo/2022/04/10/16/41/lawyer-7123798_640.jpg",
-    "https://cdn.pixabay.com/photo/2023/12/12/09/18/criminal-8444883_640.jpg",
-  ];
+  // const backgroundImages = [
+  //   "https://cdn.pixabay.com/photo/2018/09/09/18/04/judge-3665164_640.jpg",
+  //   "https://cdn.pixabay.com/photo/2024/04/26/20/21/law-8722596_640.jpg",
+  //   "https://cdn.pixabay.com/photo/2022/04/10/16/41/lawyer-7123798_640.jpg",
+  //   "https://cdn.pixabay.com/photo/2023/12/12/09/18/criminal-8444883_640.jpg",
+  // ];
 
   // Time effect
   useEffect(() => {
@@ -64,11 +64,16 @@ const Navbar = () => {
   const navItems = [
     { name: "Home", href: "/", exact: true },
     {
+      name: "Why Partner With Us?",
+      href: '/whyUs'
+
+    },
+    {
       name: "Services",
       submenu: [
         { name: "Web Development", href: "/web" },
         { name: "Mobile Apps", href: "/apps" },
-         { name: "AI & Machine Learning", href: "/ai" },
+        { name: "AI & Machine Learning", href: "/ai" },
         { name: "UI/UX Design", href: "/design" },
         { name: "Cybersecurity", href: "/cybersecurity" },
         { name: "Data Analytics", href: "/analytics" },
@@ -153,10 +158,10 @@ const Navbar = () => {
               <Laptop className="text-[#2563EB] w-8 h-8" />
               <div>
                 <h1 className="text-xl md:text-2xl font-bold text-[#1E1E1E] tracking-wide">
-                  Sankar and Rafel
+                  Sankar & Rafel
                 </h1>
                 <p className="text-xs text-gray-500 italic">
-                  Software & Web Development
+                  Elevating businesses through cutting-edge technology
                 </p>
               </div>
             </div>
@@ -334,7 +339,7 @@ const Navbar = () => {
                 className="flex items-center justify-center gap-2 text-gray-700 hover:text-[#2563EB]"
               >
                 <Phone className="w-4 h-4" />
-                +91 98765 43210
+                +91 98765 XXXXX
               </a>
               <Link
                 to="/contact"
