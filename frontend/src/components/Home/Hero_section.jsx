@@ -211,7 +211,7 @@ const Hero_section = () => {
                 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
               >
                 Transforming Ideas Into{" "}
-                <span className="bg-gradient-to-r from-blue-300 to-cyan-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-green-300 to-cyan-400 bg-clip-text text-transparent">
                   Digital Reality
                 </span>
               </motion.h1>

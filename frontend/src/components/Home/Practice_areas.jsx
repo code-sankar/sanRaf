@@ -151,7 +151,7 @@ const Practice_areas = () => {
             Our Expertise
           </motion.span>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Comprehensive <span className="text-blue-600">Development</span> Services
+            Comprehensive <span className="text-green-600">Development</span> Services
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             From startups to enterprises, we deliver tailored digital solutions that combine 

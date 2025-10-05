@@ -238,7 +238,7 @@ const TeamSection = () => {
             Meet Our Experts
           </motion.span>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Our <span className="text-blue-600">Talented Team</span>
+            Our <span className="text-green-600">Talented Team</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             A team of passionate professionals dedicated to delivering

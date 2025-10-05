@@ -68,11 +68,11 @@ const Navbar = () => {
       submenu: [
         { name: "Web Development", href: "/web" },
         { name: "Mobile Apps", href: "/apps" },
+         { name: "AI & Machine Learning", href: "/ai" },
         { name: "UI/UX Design", href: "/design" },
         { name: "Cybersecurity", href: "/cybersecurity" },
         { name: "Data Analytics", href: "/analytics" },
         { name: "Cloud & DevOps", href: "/cloud" },
-        { name: "AI & Machine Learning", href: "/ai" },
         { name: "Blockchain Solutions", href: "/blockchain" },
         { name: "QA & Testing", href: "/testing" },
       ],
@@ -240,7 +240,7 @@ const Navbar = () => {
               <div className="flex gap-3">
                 <Link
                   to="/contact"
-                  className="bg-[#2563EB] text-white hover:bg-[#1E40AF] px-5 py-2 rounded text-sm shadow-sm transition-colors duration-300 flex items-center"
+                  className="bg-green-500 text-white hover:bg-[#1E40AF] px-5 py-2 rounded text-sm shadow-sm transition-colors duration-300 flex items-center"
                 >
                   <Code className="w-4 h-4 mr-2" />
                   Get a Quote
