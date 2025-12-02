@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   Code,
   Globe,
@@ -26,6 +27,7 @@ import {
 function WebDevelopment() {
   const [activeFAQ, setActiveFAQ] = useState(null);
   const [hoveredService, setHoveredService] = useState(null);
+    const navigate = useNavigate();
 
   const services = [
     {
@@ -354,6 +356,7 @@ function WebDevelopment() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => navigate("/contact")}
                 className="bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-blue-50 transition-all shadow-2xl flex items-center gap-3"
               >
                 Start Your Project
@@ -764,6 +767,7 @@ function WebDevelopment() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                 onClick={()=> navigate('/contact')}
                 className="bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all shadow-2xl flex items-center gap-3"
               >
                 Get Free Consultation
@@ -772,6 +776,7 @@ function WebDevelopment() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={()=> navigate('/portfolio')}
                 className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-700 transition-all backdrop-blur-sm"
               >
                 View Portfolio

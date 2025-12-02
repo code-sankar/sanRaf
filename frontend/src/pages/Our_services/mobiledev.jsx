@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   Smartphone,
   Apple,
@@ -26,7 +27,7 @@ function MobileDevelopment() {
   const [activeFAQ, setActiveFAQ] = useState(null);
   const [hoveredService, setHoveredService] = useState(null);
   const [activePlatform, setActivePlatform] = useState(0);
-
+  const navigate = useNavigate();
   const services = [
     {
       icon: <Apple className="w-10 h-10" />,
@@ -419,6 +420,7 @@ function MobileDevelopment() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => navigate("/contact")}
                 className="bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-blue-50 transition-all shadow-2xl flex items-center gap-3"
               >
                 Start Your App Project
@@ -1026,6 +1028,7 @@ function MobileDevelopment() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                 onClick={() => navigate("/contact")}
                 className="bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all shadow-2xl flex items-center gap-3"
               >
                 Get Free Consultation

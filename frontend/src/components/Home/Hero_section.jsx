@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   Code,
@@ -25,6 +26,7 @@ const backgroundImages = [
 const Hero_section = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+    const navigate = useNavigate(); 
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -368,6 +370,7 @@ const Hero_section = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   className="w-full bg-gradient-to-r from-green-300 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-4 rounded-xl font-semibold transition-all shadow-lg"
+                  onClick={() => navigate("/contact")} // Add this line
                 >
                   Get Free Consultation
                 </motion.button>

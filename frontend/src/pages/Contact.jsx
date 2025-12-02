@@ -92,11 +92,11 @@ function Contact() {
   ];
 
   const budgetOptions = [
-    "Less than ₹50,000",
-    "₹50,000 - ₹1,00,000",
-    "₹1,00,000 - ₹5,00,000",
-    "₹5,00,000 - ₹10,00,000",
-    "More than ₹10,00,000",
+    "Less than $1,000",
+    "$1,000 - $5,000",
+    "$5,000 - $10,000",
+    "$10,000 - $50,000",
+    "More than $50,000",
   ];
 
   const timelineOptions = [
