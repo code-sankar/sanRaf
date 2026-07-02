@@ -1,362 +1,214 @@
-import React, { useState, useEffect, useRef } from "react";
-import { href, Link, useLocation } from "react-router-dom";
-import moment from "moment-timezone";
-import {
-  Menu,
-  X,
-  ChevronDown,
-  ChevronUp,
-  Phone,
-  Clock,
-  MapPin,
-  Laptop,
-  Code,
-  Mail,
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, ArrowRight } from "lucide-react";
+
+const nav = [
+  { name: "Why Us", href: "/whyUs" },
+  {
+    name: "Services",
+    submenu: [
+      { name: "Web Development", href: "/web" },
+      { name: "Mobile Apps", href: "/apps" },
+      { name: "AI & Machine Learning", href: "/ai" },
+      { name: "UI/UX Design", href: "/design" },
+      { name: "Cybersecurity", href: "/cybersecurity" },
+      { name: "Data Analytics", href: "/analytics" },
+      { name: "Cloud & DevOps", href: "/cloud" },
+      { name: "Blockchain", href: "/blockchain" },
+      { name: "QA & Testing", href: "/testing" },
+    ],
+  },
+  {
+    name: "Portfolio",
+    submenu: [
+      { name: "Case Studies", href: "/cases" },
+      { name: "Client Projects", href: "/projects" },
+    ],
+  },
+  { name: "Technologies", href: "/tech" },
+  { name: "Blog", href: "/blog" },
+  { name: "Contact", href: "/contact" },
+];
 
 const Navbar = () => {
-  const [currentTime, setCurrentTime] = useState("");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [openSubmenu, setOpenSubmenu] = useState(null);
-  const navbarRef = useRef(null);
-  const submenuRefs = useRef([]);
-
   const location = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(null);
 
-  // const backgroundImages = [
-  //   "https://cdn.pixabay.com/photo/2018/09/09/18/04/judge-3665164_640.jpg",
-  //   "https://cdn.pixabay.com/photo/2024/04/26/20/21/law-8722596_640.jpg",
-  //   "https://cdn.pixabay.com/photo/2022/04/10/16/41/lawyer-7123798_640.jpg",
-  //   "https://cdn.pixabay.com/photo/2023/12/12/09/18/criminal-8444883_640.jpg",
-  // ];
-
-  // Time effect
   useEffect(() => {
-    const interval = setInterval(() => {
-      const indiaTime = moment()
-        .tz("Asia/Kolkata")
-        .format("ddd, MMM D, YYYY - hh:mm:ss A");
-      setCurrentTime(indiaTime);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Scroll shadow effect
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    document.addEventListener("scroll", handleScroll);
-    return () => document.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Close mobile menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
-        setMobileMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Menu Items for Software Dev Company
-  const navItems = [
-    { name: "Home", href: "/", exact: true },
-    {
-      name: "Why Partner With Us?",
-      href: '/whyUs'
-
-    },
-    {
-      name: "Services",
-      submenu: [
-        { name: "Web Development", href: "/web" },
-        { name: "Mobile Apps", href: "/apps" },
-        { name: "AI & Machine Learning", href: "/ai" },
-        { name: "UI/UX Design", href: "/design" },
-        { name: "Cybersecurity", href: "/cybersecurity" },
-        { name: "Data Analytics", href: "/analytics" },
-        { name: "Cloud & DevOps", href: "/cloud" },
-        { name: "Blockchain Solutions", href: "/blockchain" },
-        { name: "QA & Testing", href: "/testing" },
-      ],
-    },
-    {
-      name: "Portfolio",
-      submenu: [
-        { name: "Case Studies", href: "/cases" },
-        { name: "Client Projects", href: "/projects" },
-      ],
-    },
-    { name: "Technologies", href: "/tech" },
-    { name: "Blog", href: "/blog" },
-    { name: "Contact", href: "/contact" },
-  ];
-
-  // Helper function to check if a link is active
-  const isActiveLink = (href, exact = false) => {
-    if (exact) {
-      return location.pathname === href;
-    }
-    return location.pathname.startsWith(href);
-  };
-
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setMobileMenuOpen(false);
+    setMobileOpen(false);
+    setOpenMenu(null);
   }, [location.pathname]);
 
-  const toggleSubmenu = (index) =>
-    setOpenSubmenu(openSubmenu === index ? null : index);
-
-  // Function to handle mouse leave from submenu
-  const handleSubmenuMouseLeave = (index) => {
-    // Add a small delay to prevent immediate closing when moving between menu items
-    setTimeout(() => {
-      setOpenSubmenu((prev) => (prev === index ? null : prev));
-    }, 300);
-  };
+  const isActive = (href) => location.pathname.startsWith(href);
 
   return (
-    <header ref={navbarRef}>
-      {/* Top info bar */}
-      <div className="bg-[#1E1E1E] text-white text-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center py-2">
-            <div className="flex items-center space-x-4 mb-2 md:mb-0 flex-wrap">
-              <div className="flex items-center">
-                <Mail className="w-4 h-4 mr-1" />
-                <span>support@yourcompany.com</span>
-              </div>
-              <div className="flex items-center">
-                <Clock className="w-4 h-4 mr-1" />
-                <span>24/7 Availability</span>
-              </div>
-              <div className="flex items-center">
-                <MapPin className="w-4 h-4 mr-1" />
-                <span>Dibrugarh, India</span>
-              </div>
+    <header className="font-body">
+      {/* Top bar */}
+      <div className="border-b border-line bg-paper">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
+          <div className="flex h-9 items-center justify-between gap-4 font-mono text-[0.72rem] text-faint">
+            <div className="flex gap-6 flex-wrap">
+              <span>support@sanraf.dev</span>
+              <span className="hidden sm:inline">Dibrugarh · India</span>
+              <span className="hidden md:inline">Mon–Fri, 09:00–18:00 IST</span>
             </div>
-            <div className="text-xs text-gray-300 font-mono whitespace-nowrap">
-              {currentTime}
-            </div>
+            <span className="flex items-center gap-2 text-graphite">
+              <span className="h-[7px] w-[7px] rounded-full bg-green-600 shadow-[0_0_0_3px_rgba(22,163,74,0.15)]" />
+              Available for Q3 2026
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Main Navbar */}
-      <nav
-        className={`bg-white sticky top-0 z-50 transition-all duration-300 ${
-          scrolled ? "shadow-lg" : "shadow-md"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            {/* Logo & Branding */}
-            <div className="flex items-center space-x-3">
-              <Laptop className="text-[#2563EB] w-8 h-8" />
-              <div>
-                <h1 className="text-xl md:text-2xl font-bold text-[#1E1E1E] tracking-wide">
-                  Sankar & Rafel
-                </h1>
-                <p className="text-xs text-gray-500 italic">
-                  Elevating businesses through cutting-edge technology
-                </p>
-              </div>
-            </div>
+      {/* Main nav */}
+      <nav className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
+          <div className="flex h-[68px] items-center justify-between gap-8">
+            {/* Brand */}
+            <Link to="/" className="flex items-center gap-2.5">
+              <span className="grid h-[26px] w-[26px] place-items-center border-[1.5px] border-ink font-mono text-[0.8rem] font-semibold">
+                S
+              </span>
+              <span className="leading-none">
+                <span className="font-display text-[1.12rem] font-semibold tracking-tight">
+                  SanRaf
+                </span>
+                <br />
+                <span className="font-mono text-[0.62rem] text-faint">
+                  Software Engineering Studio
+                </span>
+              </span>
+            </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8">
-              <ul className="flex space-x-6 text-[15px] font-medium text-[#1E1E1E]">
-                {navItems.map((item, index) => (
-                  <li
+            {/* Desktop links */}
+            <div className="hidden lg:flex items-center gap-8">
+              {nav.map((item) =>
+                item.submenu ? (
+                  <div
                     key={item.name}
-                    className="relative group"
-                    onMouseEnter={() => {
-                      if (item.submenu) setOpenSubmenu(index);
-                    }}
-                    onMouseLeave={() => {
-                      if (item.submenu) handleSubmenuMouseLeave(index);
-                    }}
-                    ref={(el) => (submenuRefs.current[index] = el)}
+                    className="relative"
+                    onMouseEnter={() => setOpenMenu(item.name)}
+                    onMouseLeave={() => setOpenMenu(null)}
                   >
-                    {item.submenu ? (
-                      <>
-                        <button
-                          className={`flex items-center gap-1 transition py-2 ${
-                            isActiveLink(item.href, item.exact)
-                              ? "text-[#2563EB] font-semibold"
-                              : "hover:text-[#2563EB]"
-                          }`}
-                          onClick={() => toggleSubmenu(index)}
-                          aria-expanded={openSubmenu === index}
-                          aria-haspopup="true"
+                    <button className="flex items-center gap-1 text-[0.9rem] text-graphite transition hover:text-ink">
+                      {item.name}
+                      <ChevronDown className="h-3.5 w-3.5" />
+                    </button>
+                    <AnimatePresence>
+                      {openMenu === item.name && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 6 }}
+                          transition={{ duration: 0.15 }}
+                          className="absolute left-0 top-full pt-3"
                         >
-                          {item.name}
-                          {openSubmenu === index ? (
-                            <ChevronUp className="w-4 h-4" />
-                          ) : (
-                            <ChevronDown className="w-4 h-4" />
-                          )}
-                        </button>
-                        <ul
-                          className={`absolute left-0 top-full ${
-                            openSubmenu === index ? "block" : "hidden"
-                          } mt-0 bg-white border border-gray-200 rounded-md shadow-lg w-56 z-10`}
-                          onMouseLeave={() => handleSubmenuMouseLeave(index)}
-                        >
-                          {item.submenu.map((sub) => (
-                            <li key={sub.name}>
+                          <div className="min-w-[220px] border border-line bg-white">
+                            {item.submenu.map((sub) => (
                               <Link
+                                key={sub.href}
                                 to={sub.href}
-                                className={`block px-4 py-3 text-sm border-b border-gray-100 last:border-b-0 ${
-                                  isActiveLink(sub.href)
-                                    ? "bg-blue-50 text-[#2563EB] font-medium"
-                                    : "text-gray-700 hover:bg-gray-50 hover:text-[#2563EB]"
-                                }`}
+                                className="block border-b border-line px-4 py-2.5 text-[0.88rem] text-graphite transition last:border-b-0 hover:bg-accent/5 hover:text-ink"
                               >
                                 {sub.name}
                               </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </>
-                    ) : (
-                      <Link
-                        to={item.href}
-                        className={`hover:text-[#2563EB] transition py-2 block ${
-                          isActiveLink(item.href, item.exact)
-                            ? "text-[#2563EB] font-semibold"
-                            : ""
-                        }`}
-                        aria-current={
-                          isActiveLink(item.href, item.exact)
-                            ? "page"
-                            : undefined
-                        }
-                      >
-                        {item.name}
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-              <div className="flex gap-3">
-                <Link
-                  to="/contact"
-                  className="bg-green-500 text-white hover:bg-[#1E40AF] px-5 py-2 rounded text-sm shadow-sm transition-colors duration-300 flex items-center"
-                >
-                  <Code className="w-4 h-4 mr-2" />
-                  Get a Quote
-                </Link>
-              </div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={`group relative text-[0.9rem] transition ${
+                      isActive(item.href)
+                        ? "text-ink"
+                        : "text-graphite hover:text-ink"
+                    }`}
+                  >
+                    {item.name}
+                    <span
+                      className={`absolute -bottom-1.5 left-0 h-[1.5px] bg-accent transition-all ${
+                        isActive(item.href) ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
+                    />
+                  </Link>
+                )
+              )}
             </div>
 
-            {/* Mobile Menu Toggle */}
-            <div className="lg:hidden">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-700 hover:text-[#2563EB] p-2"
-                aria-label="Toggle menu"
-                aria-expanded={mobileMenuOpen}
+            {/* CTA + burger */}
+            <div className="flex items-center gap-4">
+              <Link
+                to="/contact"
+                className="hidden lg:inline-flex items-center gap-2 border border-ink bg-ink px-4 py-2.5 font-mono text-[0.82rem] font-medium text-paper transition hover:border-accent hover:bg-accent"
               >
-                {mobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
+                Start a project <ArrowRight className="h-4 w-4" />
+              </Link>
+              <button
+                onClick={() => setMobileOpen((o) => !o)}
+                className="font-mono text-[0.8rem] lg:hidden"
+                aria-label="Toggle menu"
+                aria-expanded={mobileOpen}
+              >
+                {mobileOpen ? "close" : "menu"}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t border-gray-200 px-4 py-4 shadow-inner">
-            <ul className="space-y-2">
-              {navItems.map((item, index) =>
-                item.submenu ? (
-                  <li key={item.name} className="border-b pb-2">
-                    <button
-                      className={`flex justify-between items-center w-full py-3 font-medium ${
-                        isActiveLink(item.href, item.exact)
-                          ? "text-[#2563EB]"
-                          : "text-gray-800"
-                      }`}
-                      onClick={() => toggleSubmenu(index)}
-                      aria-expanded={openSubmenu === index}
-                    >
-                      {item.name}
-                      {openSubmenu === index ? (
-                        <ChevronUp className="w-5 h-5" />
-                      ) : (
-                        <ChevronDown className="w-5 h-5" />
-                      )}
-                    </button>
-                    <div
-                      className={`pl-4 py-2 space-y-2 ${
-                        openSubmenu === index ? "block" : "hidden"
-                      }`}
-                    >
+        {/* Mobile menu */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden border-t border-line lg:hidden"
+            >
+              <div className="max-w-[1180px] mx-auto px-5 sm:px-8 py-2">
+                {nav.map((item) =>
+                  item.submenu ? (
+                    <div key={item.name} className="border-t border-line first:border-t-0">
+                      <p className="pt-4 pb-1 font-mono text-[0.7rem] uppercase text-faint">
+                        {item.name}
+                      </p>
                       {item.submenu.map((sub) => (
                         <Link
-                          key={sub.name}
+                          key={sub.href}
                           to={sub.href}
-                          className={`block py-2 text-sm ${
-                            isActiveLink(sub.href)
-                              ? "text-[#2563EB] font-medium"
-                              : "text-gray-700 hover:text-[#2563EB]"
-                          }`}
-                          onClick={() => setMobileMenuOpen(false)}
+                          className="block py-2 text-[0.92rem] text-graphite hover:text-ink"
                         >
                           {sub.name}
                         </Link>
                       ))}
                     </div>
-                  </li>
-                ) : (
-                  <li key={item.name} className="border-b">
+                  ) : (
                     <Link
+                      key={item.name}
                       to={item.href}
-                      className={`block py-3 font-medium ${
-                        isActiveLink(item.href, item.exact)
-                          ? "text-[#2563EB]"
-                          : "text-gray-800 hover:text-[#2563EB]"
-                      }`}
-                      onClick={() => setMobileMenuOpen(false)}
+                      className="block border-t border-line py-3 text-[0.95rem] text-graphite hover:text-ink first:border-t-0"
                     >
                       {item.name}
                     </Link>
-                  </li>
-                )
-              )}
-            </ul>
-
-            <div className="mt-4 space-y-3">
-              <a
-                href="tel:+919876543210"
-                className="flex items-center justify-center gap-2 text-gray-700 hover:text-[#2563EB]"
-              >
-                <Phone className="w-4 h-4" />
-                +91 98765 XXXXX
-              </a>
-              <Link
-                to="/contact"
-                className="block bg-[#2563EB] text-white text-center py-3 rounded font-medium shadow-sm"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Get a Quote
-              </Link>
-            </div>
-          </div>
-        )}
+                  )
+                )}
+                <Link
+                  to="/contact"
+                  className="my-4 flex items-center justify-center gap-2 border border-ink bg-ink px-4 py-3 font-mono text-[0.85rem] text-paper"
+                >
+                  Start a project <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
-
-      {/* Animated accent line */}
-      <div className="w-full h-1.5 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB] via-gray-100 to-[#1E40AF] animate-flagWave"></div>
-      </div>
     </header>
   );
 };

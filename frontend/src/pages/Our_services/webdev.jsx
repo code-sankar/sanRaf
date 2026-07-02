@@ -1,792 +1,592 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import {
-  Code,
   Globe,
   Server,
   Database,
   Layout,
   Smartphone,
+  Code,
   Zap,
   CheckCircle,
-  ArrowRight,
-  BarChart,
   Users,
+  BarChart,
   Target,
   Rocket,
   Shield,
   Clock,
   Award,
-  Play,
-  Star,
-  ChevronDown,
-  ChevronUp,
+  ArrowRight,
+  ArrowUpRight,
+  Plus,
+  Minus,
 } from "lucide-react";
 
-function WebDevelopment() {
-  const [activeFAQ, setActiveFAQ] = useState(null);
-  const [hoveredService, setHoveredService] = useState(null);
-    const navigate = useNavigate();
+/* ---------------- data (unchanged) ---------------- */
 
-  const services = [
-    {
-      icon: <Globe className="w-10 h-10" />,
-      title: "Frontend Development",
-      description:
-        "Modern, responsive websites and web applications using React, Angular, Vue.js, and more",
-      features: [
-        "Progressive Web Apps",
-        "Single Page Applications",
-        "Cross-browser Compatibility",
-        "Performance Optimization",
-      ],
-      gradient: "from-blue-500 to-cyan-500",
-      technologies: ["React", "Next.js", "Vue.js", "TypeScript"],
-    },
-    {
-      icon: <Server className="w-10 h-10" />,
-      title: "Backend Development",
-      description:
-        "Robust server-side applications with Node.js, Python, Java, PHP, and .NET frameworks",
-      features: [
-        "RESTful APIs",
-        "Microservices",
-        "Authentication",
-        "Serverless Architecture",
-      ],
-      gradient: "from-green-500 to-emerald-500",
-      technologies: ["Node.js", "Python", "Java", "Spring Boot"],
-    },
-    {
-      icon: <Database className="w-10 h-10" />,
-      title: "Database Design",
-      description:
-        "SQL and NoSQL database architecture, optimization, and management",
-      features: [
-        "Database Design",
-        "Query Optimization",
-        "Data Migration",
-        "Backup & Recovery",
-      ],
-      gradient: "from-purple-500 to-pink-500",
-      technologies: ["MongoDB", "PostgreSQL", "MySQL", "Redis"],
-    },
-    {
-      icon: <Layout className="w-10 h-10" />,
-      title: "CMS Development",
-      description:
-        "Custom WordPress, Drupal, and other content management system solutions",
-      features: [
-        "Custom Themes",
-        "Plugin Development",
-        "Headless CMS",
-        "E-commerce Integration",
-      ],
-      gradient: "from-orange-500 to-red-500",
-      technologies: ["WordPress", "Strapi", "Contentful", "Shopify"],
-    },
-    {
-      icon: <Smartphone className="w-10 h-10" />,
-      title: "Progressive Web Apps",
-      description:
-        "Fast, reliable web apps that work offline and feel like native applications",
-      features: [
-        "Offline Functionality",
-        "Push Notifications",
-        "App-like Experience",
-        "Fast Loading",
-      ],
-      gradient: "from-indigo-500 to-purple-500",
-      technologies: ["PWA", "Service Workers", "Web App Manifest", "Caching"],
-    },
-    {
-      icon: <Code className="w-10 h-10" />,
-      title: "API Development",
-      description:
-        "RESTful and GraphQL APIs for seamless integration with other systems",
-      features: [
-        "REST APIs",
-        "GraphQL",
-        "WebSocket",
-        "Third-party Integration",
-      ],
-      gradient: "from-teal-500 to-cyan-500",
-      technologies: ["REST", "GraphQL", "WebSocket", "OAuth"],
-    },
-  ];
+const services = [
+  {
+    icon: Globe,
+    title: "Frontend Development",
+    description:
+      "Modern, responsive websites and web applications using React, Angular, Vue.js, and more.",
+    features: ["Progressive Web Apps", "Single Page Applications", "Cross-browser Compatibility", "Performance Optimization"],
+    technologies: ["React", "Next.js", "Vue.js", "TypeScript"],
+  },
+  {
+    icon: Server,
+    title: "Backend Development",
+    description:
+      "Robust server-side applications with Node.js, Python, Java, PHP, and .NET frameworks.",
+    features: ["RESTful APIs", "Microservices", "Authentication", "Serverless Architecture"],
+    technologies: ["Node.js", "Python", "Java", "Spring Boot"],
+  },
+  {
+    icon: Database,
+    title: "Database Design",
+    description:
+      "SQL and NoSQL database architecture, optimization, and management.",
+    features: ["Database Design", "Query Optimization", "Data Migration", "Backup & Recovery"],
+    technologies: ["MongoDB", "PostgreSQL", "MySQL", "Redis"],
+  },
+  {
+    icon: Layout,
+    title: "CMS Development",
+    description:
+      "Custom WordPress, Drupal, and headless CMS solutions.",
+    features: ["Custom Themes", "Plugin Development", "Headless CMS", "E-commerce Integration"],
+    technologies: ["WordPress", "Strapi", "Contentful", "Shopify"],
+  },
+  {
+    icon: Smartphone,
+    title: "Progressive Web Apps",
+    description:
+      "Fast, reliable web apps that work offline and feel like native applications.",
+    features: ["Offline Functionality", "Push Notifications", "App-like Experience", "Fast Loading"],
+    technologies: ["PWA", "Service Workers", "Web App Manifest", "Caching"],
+  },
+  {
+    icon: Code,
+    title: "API Development",
+    description:
+      "RESTful and GraphQL APIs for seamless integration with other systems.",
+    features: ["REST APIs", "GraphQL", "WebSocket", "Third-party Integration"],
+    technologies: ["REST", "GraphQL", "WebSocket", "OAuth"],
+  },
+];
 
-  const technologies = [
-    { name: "React", color: "from-blue-500 to-cyan-500", icon: "⚛️" },
-    { name: "Angular", color: "from-red-500 to-pink-500", icon: "🅰️" },
-    { name: "Vue.js", color: "from-green-500 to-emerald-500", icon: "🌐" },
-    { name: "Node.js", color: "from-green-600 to-green-800", icon: "🔗" },
-    { name: "Python", color: "from-yellow-500 to-blue-500", icon: "🐍" },
-    { name: "PHP", color: "from-purple-500 to-indigo-500", icon: "🐘" },
-    { name: "Java", color: "from-red-600 to-orange-600", icon: "☕" },
-    { name: ".NET", color: "from-purple-600 to-purple-800", icon: "🔷" },
-    { name: "MongoDB", color: "from-green-500 to-green-700", icon: "🍃" },
-    { name: "PostgreSQL", color: "from-blue-600 to-blue-800", icon: "🐘" },
-    { name: "MySQL", color: "from-orange-500 to-blue-500", icon: "🐬" },
-    { name: "AWS", color: "from-orange-500 to-yellow-500", icon: "☁️" },
-  ];
+const technologies = [
+  "React", "Angular", "Vue.js", "Node.js", "Python", "PHP",
+  "Java", ".NET", "MongoDB", "PostgreSQL", "MySQL", "AWS",
+];
 
-  const processSteps = [
-    {
-      step: "01",
-      title: "Discovery & Planning",
-      description:
-        "Understand requirements, define scope, and create project roadmap",
-      icon: <Target className="w-6 h-6" />,
-      duration: "1-2 weeks",
-    },
-    {
-      step: "02",
-      title: "UI/UX Design",
-      description:
-        "Create wireframes, prototypes, and visual designs for optimal user experience",
-      icon: <Layout className="w-6 h-6" />,
-      duration: "2-3 weeks",
-    },
-    {
-      step: "03",
-      title: "Development",
-      description:
-        "Agile development with regular iterations and client feedback",
-      icon: <Code className="w-6 h-6" />,
-      duration: "4-12 weeks",
-    },
-    {
-      step: "04",
-      title: "Testing & Quality Assurance",
-      description:
-        "Comprehensive testing including unit, integration, and user acceptance testing",
-      icon: <CheckCircle className="w-6 h-6" />,
-      duration: "1-2 weeks",
-    },
-    {
-      step: "05",
-      title: "Deployment",
-      description:
-        "Smooth deployment to production environment with zero downtime",
-      icon: <Rocket className="w-6 h-6" />,
-      duration: "1 week",
-    },
-    {
-      step: "06",
-      title: "Maintenance & Support",
-      description: "Ongoing support, updates, and performance optimization",
-      icon: <Shield className="w-6 h-6" />,
-      duration: "Ongoing",
-    },
-  ];
+const processSteps = [
+  { step: "01", title: "Discovery & Planning", description: "Understand requirements, define scope, and create the roadmap.", duration: "1–2 weeks", icon: Target },
+  { step: "02", title: "UI/UX Design", description: "Wireframes, prototypes, and visual designs for the best experience.", duration: "2–3 weeks", icon: Layout },
+  { step: "03", title: "Development", description: "Agile development with regular iterations and feedback.", duration: "4–12 weeks", icon: Code },
+  { step: "04", title: "Testing & QA", description: "Unit, integration, and user acceptance testing across the stack.", duration: "1–2 weeks", icon: CheckCircle },
+  { step: "05", title: "Deployment", description: "Smooth production release with zero-downtime rollout.", duration: "1 week", icon: Rocket },
+  { step: "06", title: "Maintenance & Support", description: "Ongoing support, updates, and performance work.", duration: "Ongoing", icon: Shield },
+];
 
-  const caseStudies = [
-    {
-      title: "E-commerce Platform Development",
-      industry: "Retail",
-      challenge:
-        "Outdated platform with poor mobile experience and slow performance",
-      solution:
-        "Modern React-based PWA with optimized backend and cloud infrastructure",
-      results:
-        "3x faster load times, 40% increase in mobile conversions, 99.9% uptime",
-      image:
-        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      technologies: ["React", "Node.js", "MongoDB", "AWS"],
-    },
-    {
-      title: "Healthcare Portal Modernization",
-      industry: "Healthcare",
-      challenge:
-        "Complex legacy system with poor usability and security concerns",
-      solution:
-        "Secure Angular application with HIPAA compliance and intuitive patient portal",
-      results:
-        "70% reduction in support calls, enhanced security, improved patient engagement",
-      image:
-        "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      technologies: ["Angular", ".NET", "SQL Server", "Azure"],
-    },
-    {
-      title: "SaaS Application Scaling",
-      industry: "Technology",
-      challenge: "Startup experiencing rapid growth with scalability issues",
-      solution:
-        "Microservices architecture with Kubernetes and optimized database design",
-      results:
-        "Handled 10x user growth, 5x performance improvement, reduced infrastructure costs",
-      image:
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      technologies: ["Vue.js", "Python", "PostgreSQL", "Docker"],
-    },
-  ];
+const benefits = [
+  { icon: Zap, title: "High Performance", description: "Lightning-fast sites with optimized code and modern architectures.", metric: "Load times under 2s" },
+  { icon: CheckCircle, title: "Quality Code", description: "Clean, maintainable code following industry best practices.", metric: "100% code-review coverage" },
+  { icon: Smartphone, title: "Mobile Responsive", description: "Flawless experiences across all devices and screen sizes.", metric: "Perfect mobile scores" },
+  { icon: BarChart, title: "SEO Optimized", description: "Search-friendly sites that rank higher and pull in traffic.", metric: "90+ PageSpeed" },
+  { icon: Users, title: "User-Centered", description: "Intuitive interfaces designed with real users in mind.", metric: "50% higher engagement" },
+  { icon: Target, title: "Scalable Architecture", description: "Future-proof solutions that grow with your business.", metric: "10M+ monthly users" },
+];
 
-  const benefits = [
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: "High Performance",
-      description:
-        "Lightning-fast websites with optimized code and modern architectures",
-      metrics: "Load times under 2 seconds",
-    },
-    {
-      icon: <CheckCircle className="w-8 h-8" />,
-      title: "Quality Code",
-      description:
-        "Clean, maintainable code following industry best practices and standards",
-      metrics: "100% code review coverage",
-    },
-    {
-      icon: <Smartphone className="w-8 h-8" />,
-      title: "Mobile Responsive",
-      description: "Flawless experiences across all devices and screen sizes",
-      metrics: "Perfect scores on mobile tests",
-    },
-    {
-      icon: <BarChart className="w-8 h-8" />,
-      title: "SEO Optimized",
-      description:
-        "Search engine friendly websites that rank higher and attract more traffic",
-      metrics: "90+ Google PageSpeed score",
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: "User-Centered",
-      description: "Intuitive interfaces designed with real users in mind",
-      metrics: "50% higher user engagement",
-    },
-    {
-      icon: <Target className="w-8 h-8" />,
-      title: "Scalable Architecture",
-      description: "Future-proof solutions that grow with your business needs",
-      metrics: "Handles 10M+ monthly users",
-    },
-  ];
+const stats = [
+  { value: "88%", label: "of users won't return after a poor experience" },
+  { value: "50%", label: "of mobile users abandon 3s-slow sites" },
+  { value: "75%", label: "of credibility comes from site design" },
+  { value: "3.5x", label: "higher conversion on mobile-optimized sites" },
+];
 
-  const stats = [
-    {
-      value: "88%",
-      label: "of consumers won't return after poor user experience",
-      icon: <Users className="w-6 h-6" />,
-    },
-    {
-      value: "50%",
-      label: "of mobile users abandon sites that take over 3 seconds to load",
-      icon: <Clock className="w-6 h-6" />,
-    },
-    {
-      value: "75%",
-      label: "of credibility comes from website design and quality",
-      icon: <Award className="w-6 h-6" />,
-    },
-    {
-      value: "3.5x",
-      label: "higher conversion rates for mobile-optimized sites",
-      icon: <BarChart className="w-6 h-6" />,
-    },
-  ];
+const caseStudies = [
+  {
+    title: "E-commerce Platform Development",
+    industry: "Retail",
+    challenge: "Outdated platform with poor mobile experience and slow performance.",
+    solution: "Modern React-based PWA with optimized backend and cloud infrastructure.",
+    results: "3× faster load times, 40% more mobile conversions, 99.9% uptime.",
+    technologies: ["React", "Node.js", "MongoDB", "AWS"],
+  },
+  {
+    title: "Healthcare Portal Modernization",
+    industry: "Healthcare",
+    challenge: "Complex legacy system with poor usability and security concerns.",
+    solution: "Secure Angular application with HIPAA compliance and intuitive patient portal.",
+    results: "70% fewer support calls, tighter security, better patient engagement.",
+    technologies: ["Angular", ".NET", "SQL Server", "Azure"],
+  },
+  {
+    title: "SaaS Application Scaling",
+    industry: "Technology",
+    challenge: "Startup with rapid growth hit scalability limits.",
+    solution: "Microservices with Kubernetes and an optimized database design.",
+    results: "Handled 10× user growth, 5× performance, lower infra cost.",
+    technologies: ["Vue.js", "Python", "PostgreSQL", "Docker"],
+  },
+];
 
-  const faqs = [
-    {
-      question: "How long does a typical web development project take?",
-      answer:
-        "Project timelines vary based on complexity. Simple websites take 4-8 weeks, medium complexity web applications take 2-4 months, and complex enterprise solutions can take 6+ months. We provide detailed timelines after understanding your requirements.",
-    },
-    {
-      question:
-        "What's the difference between frontend and backend development?",
-      answer:
-        "Frontend development focuses on the user interface and experience (what users see and interact with). Backend development involves server-side logic, databases, and application functionality (how the application works behind the scenes).",
-    },
-    {
-      question: "Do you provide ongoing maintenance after launch?",
-      answer:
-        "Yes, we offer comprehensive maintenance packages including security updates, bug fixes, performance optimization, and feature enhancements. We believe in building long-term partnerships with our clients.",
-    },
-    {
-      question: "How do you ensure website security?",
-      answer:
-        "We follow security best practices including regular vulnerability assessments, SSL encryption, secure coding standards, input validation, and compliance with security frameworks. We also conduct penetration testing before launch.",
-    },
-  ];
+const faqs = [
+  { q: "How long does a typical web development project take?", a: "Timelines depend on complexity. Simple sites take 4–8 weeks, medium web apps 2–4 months, and complex enterprise builds 6+ months. We share detailed timelines after scoping." },
+  { q: "What's the difference between frontend and backend development?", a: "Frontend is the interface — what users see and interact with. Backend is server-side logic, databases, and the systems behind the app that make it work." },
+  { q: "Do you provide ongoing maintenance after launch?", a: "Yes. We offer maintenance packages covering security updates, bug fixes, performance work, and feature enhancements — we prefer long-term partnerships." },
+  { q: "How do you ensure website security?", a: "Regular vulnerability assessments, SSL, secure coding standards, input validation, and framework compliance. We also run penetration testing before launch." },
+];
 
-  const toggleFAQ = (index) => {
-    setActiveFAQ(activeFAQ === index ? null : index);
-  };
+/* ---------------- component ---------------- */
+
+const WebDevelopment = () => {
+  const navigate = useNavigate();
+  const [openFAQ, setOpenFAQ] = useState(null);
+  const [activeCase, setActiveCase] = useState(0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/30">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-900 via-blue-800 to-purple-900 text-white py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-600/20 to-transparent"></div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full mb-6"
-            >
-              <Star className="w-4 h-4 text-yellow-400" />
-              <span className="text-sm font-medium">
-                Top-Rated Web Development
+    <div className="min-h-screen bg-paper font-body">
+      {/* ================= HERO ================= */}
+      <section className="border-b border-line">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8 py-16 md:py-24">
+          <div className="grid gap-12 lg:grid-cols-[1.35fr_0.95fr] lg:items-end">
+            <div>
+              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] lowercase text-faint">
+                <span className="inline-block h-px w-3.5 bg-accent" />
+                services / web development
               </span>
-            </motion.div>
-
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              Web{" "}
-              <span className="bg-gradient-to-r from-blue-300 to-cyan-400 bg-clip-text text-transparent">
-                Development
-              </span>
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-              Build high-performance, scalable web applications that drive
-              business growth and deliver exceptional user experiences
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate("/contact")}
-                className="bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-blue-50 transition-all shadow-2xl flex items-center gap-3"
-              >
-                Start Your Project
-                <ArrowRight className="w-5 h-5" />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 transition-all backdrop-blur-sm flex items-center gap-3"
-              >
-                <Play className="w-5 h-5" />
-                Watch Demo
-              </motion.button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-white/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
-              >
-                <div className="text-blue-600 flex justify-center mb-3">
-                  {stat.icon}
-                </div>
-                <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-gray-700 text-sm leading-relaxed">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Our Web Development{" "}
-              <span className="text-blue-600">Services</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Full-stack development solutions tailored to your specific
-              business needs and technical requirements
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group relative"
-                onMouseEnter={() => setHoveredService(index)}
-                onMouseLeave={() => setHoveredService(null)}
-              >
-                <motion.div
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 group-hover:border-blue-200 h-full flex flex-col"
+              <h1 className="mt-6 max-w-[18ch] font-display text-[clamp(2.25rem,1.3rem+3.8vw,4rem)] font-medium leading-[1.05] tracking-tight text-ink">
+                High-performance web applications, built to&nbsp;
+                <span className="border-b-2 border-accent pb-0.5">last</span>.
+              </h1>
+              <p className="mt-6 max-w-[52ch] text-[clamp(1.02rem,1rem+0.4vw,1.2rem)] leading-[1.55] text-graphite">
+                We design and build web platforms that scale — from marketing
+                sites and PWAs to complex internal tools and public products —
+                with the operational rigor to keep them running.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <button
+                  onClick={() => navigate("/contact")}
+                  className="group inline-flex items-center gap-2 border border-ink bg-ink px-5 py-3.5 font-mono text-[0.82rem] font-medium text-paper transition hover:border-accent hover:bg-accent"
                 >
-                  {/* Header with Gradient */}
-                  <div className={`h-2 bg-gradient-to-r ${service.gradient}`} />
+                  Start a project
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </button>
+                <button
+                  onClick={() => navigate("/cases")}
+                  className="inline-flex items-center border border-line-strong px-5 py-3.5 font-mono text-[0.82rem] font-medium text-ink transition hover:border-ink"
+                >
+                  See case studies
+                </button>
+              </div>
+            </div>
 
-                  <div className="p-6 flex-1 flex flex-col">
-                    {/* Icon and Title */}
-                    <div className="flex items-center gap-4 mb-4">
-                      <div
-                        className={`p-3 rounded-2xl bg-gradient-to-br ${service.gradient} text-white shadow-lg`}
-                      >
-                        {service.icon}
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                        {service.title}
-                      </h3>
-                    </div>
+            {/* summary panel */}
+            <aside className="border border-line bg-white">
+              <div className="flex justify-between border-b border-line px-4 py-3 font-mono text-[0.72rem] text-faint">
+                <span>~/web-development</span>
+                <span>overview</span>
+              </div>
+              <dl className="divide-y divide-line">
+                <div className="flex justify-between px-4 py-3">
+                  <dt className="font-mono text-[0.74rem] text-graphite">Timeline</dt>
+                  <dd className="font-display text-[0.95rem] text-ink">4 weeks – 6 months</dd>
+                </div>
+                <div className="flex justify-between px-4 py-3">
+                  <dt className="font-mono text-[0.74rem] text-graphite">Team size</dt>
+                  <dd className="font-display text-[0.95rem] text-ink">3–8 engineers</dd>
+                </div>
+                <div className="flex justify-between px-4 py-3">
+                  <dt className="font-mono text-[0.74rem] text-graphite">Stack</dt>
+                  <dd className="font-display text-[0.95rem] text-ink">React · Node · Postgres</dd>
+                </div>
+                <div className="flex justify-between px-4 py-3">
+                  <dt className="font-mono text-[0.74rem] text-graphite">Projects shipped</dt>
+                  <dd className="font-display text-[0.95rem] text-ink">45+</dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+        </div>
+      </section>
 
-                    <p className="text-gray-600 leading-relaxed mb-4 flex-1">
-                      {service.description}
-                    </p>
-
-                    {/* Features List */}
-                    <div className="space-y-2 mb-4">
-                      {service.features
-                        .slice(0, 2)
-                        .map((feature, featureIndex) => (
-                          <div
-                            key={featureIndex}
-                            className="flex items-center gap-2"
-                          >
-                            <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
-                            <span className="text-sm text-gray-600">
-                              {feature}
-                            </span>
-                          </div>
-                        ))}
-                    </div>
-
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {service.technologies.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md font-medium"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* CTA Button */}
-                    <motion.button
-                      whileHover={{ x: 4 }}
-                      className="mt-auto flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors group/btn"
-                    >
-                      Learn More
-                      <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                    </motion.button>
-                  </div>
-
-                  {/* Hover Effect Overlay */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: hoveredService === index ? 1 : 0 }}
-                    className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none"
-                  />
-                </motion.div>
-              </motion.div>
+      {/* ================= STATS BAND ================= */}
+      <section className="border-b border-line">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4">
+            {stats.map((s, i) => (
+              <div
+                key={s.label}
+                className={`p-6 md:p-8 ${i !== 0 ? "md:border-l md:border-line" : ""} ${i === 1 ? "border-l border-line md:border-l" : ""} ${i < 2 ? "border-b border-line md:border-b-0" : ""}`}
+              >
+                <div className="font-display text-[clamp(1.75rem,1.2rem+1.5vw,2.4rem)] font-medium tracking-tight text-ink">
+                  {s.value}
+                </div>
+                <div className="mt-1 max-w-[24ch] font-mono text-[0.72rem] leading-relaxed text-graphite">
+                  {s.label}
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Technologies Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Technologies We <span className="text-blue-600">Master</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Modern frameworks and tools for building cutting-edge web
-              solutions that stand the test of time
+      {/* ================= SERVICES ================= */}
+      <section className="border-b border-line">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8 py-16 md:py-24">
+          <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] lowercase text-faint">
+                <span className="inline-block h-px w-3.5 bg-accent" />
+                capabilities
+              </span>
+              <h2 className="mt-4 max-w-[18ch] font-display text-[clamp(1.75rem,1.2rem+2vw,2.6rem)] font-medium tracking-tight text-ink">
+                What we build.
+              </h2>
+            </div>
+            <p className="max-w-[36ch] text-graphite">
+              Full-stack coverage across the layers of a modern web product — one
+              team, no hand-offs.
             </p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-            {technologies.map((tech, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                viewport={{ once: true }}
-                className={`bg-gradient-to-br ${tech.color} text-white p-4 rounded-xl text-center shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105`}
-              >
-                <div className="text-2xl mb-2">{tech.icon}</div>
-                <div className="font-semibold text-sm">{tech.name}</div>
-              </motion.div>
-            ))}
           </div>
-        </div>
-      </section>
 
-      {/* Process Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-50 to-purple-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Our Development <span className="text-blue-600">Process</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              A structured, agile approach to delivering successful web projects
-              on time and within budget
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {processSteps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group"
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform">
-                    {step.step}
-                  </div>
-                  <div className="text-blue-600">{step.icon}</div>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600 mb-4 leading-relaxed">
-                  {step.description}
-                </p>
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <Clock className="w-4 h-4" />
-                  <span>{step.duration}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Case Studies Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Success <span className="text-blue-600">Stories</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Real-world examples of how our web solutions transformed
-              businesses and delivered exceptional results
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {caseStudies.map((study, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 group"
-              >
-                <div className="h-48 overflow-hidden">
-                  <img
-                    src={study.image}
-                    alt={study.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full font-medium">
-                      {study.industry}
+          <div className="grid grid-cols-1 border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
+            {services.map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <motion.article
+                  key={s.title}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: (i % 3) * 0.06 }}
+                  className="flex flex-col border-b border-r border-line bg-white p-7"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[0.72rem] text-faint">
+                      {String(i + 1).padStart(2, "0")}
                     </span>
+                    <Icon className="h-5 w-5 text-ink" strokeWidth={1.6} />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-                    {study.title}
+                  <h3 className="mt-6 font-display text-[1.25rem] font-medium text-ink">
+                    {s.title}
                   </h3>
-
-                  <div className="space-y-3 mb-4">
-                    <div>
-                      <h4 className="font-semibold text-sm text-gray-700 mb-1">
-                        Challenge
-                      </h4>
-                      <p className="text-sm text-gray-600">{study.challenge}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-sm text-gray-700 mb-1">
-                        Solution
-                      </h4>
-                      <p className="text-sm text-gray-600">{study.solution}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-sm text-gray-700 mb-1">
-                        Results
-                      </h4>
-                      <p className="text-sm text-gray-600">{study.results}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    {study.technologies.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md font-medium"
-                      >
-                        {tech}
+                  <p className="mt-2 text-[0.92rem] leading-relaxed text-graphite">
+                    {s.description}
+                  </p>
+                  <ul className="mt-4 space-y-1.5">
+                    {s.features.map((f) => (
+                      <li key={f} className="flex items-baseline gap-2 text-[0.86rem] text-ink">
+                        <span className="font-mono text-[0.7rem] text-accent">·</span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-5 flex flex-wrap gap-1.5 border-t border-line pt-4">
+                    {s.technologies.map((t) => (
+                      <span key={t} className="border border-line-strong px-2 py-0.5 font-mono text-[0.68rem] text-graphite">
+                        {t}
                       </span>
                     ))}
                   </div>
-                </div>
-              </motion.div>
+                </motion.article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= TECH ROW ================= */}
+      <section className="border-b border-line">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8 py-14 md:py-16">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] lowercase text-faint">
+              <span className="inline-block h-px w-3.5 bg-accent" />
+              stack we work in
+            </span>
+          </div>
+          <div className="mt-8 flex flex-wrap gap-2">
+            {technologies.map((t) => (
+              <span
+                key={t}
+                className="border border-line-strong bg-white px-3 py-1.5 font-mono text-[0.78rem] text-ink"
+              >
+                {t}
+              </span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Frequently Asked <span className="text-blue-600">Questions</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Everything you need to know about our web development services
-            </p>
-          </motion.div>
-
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden"
-              >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                >
-                  <span className="text-lg font-semibold text-gray-900">
-                    {faq.question}
-                  </span>
-                  {activeFAQ === index ? (
-                    <ChevronUp className="w-5 h-5 text-gray-500" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-500" />
-                  )}
-                </button>
-                <AnimatePresence>
-                  {activeFAQ === index && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-6 pb-4">
-                        <p className="text-gray-600 leading-relaxed">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to Build Your Web Solution?
-            </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto text-blue-100 leading-relaxed">
-              Let's discuss your project and create a web application that
-              exceeds your expectations and drives real business results
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                 onClick={()=> navigate('/contact')}
-                className="bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all shadow-2xl flex items-center gap-3"
-              >
-                Get Free Consultation
-                <ArrowRight className="w-5 h-5" />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={()=> navigate('/portfolio')}
-                className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-700 transition-all backdrop-blur-sm"
-              >
-                View Portfolio
-              </motion.button>
+      {/* ================= PROCESS ================= */}
+      <section className="border-b border-line">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8 py-16 md:py-24">
+          <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] lowercase text-faint">
+                <span className="inline-block h-px w-3.5 bg-accent" />
+                how we work
+              </span>
+              <h2 className="mt-4 max-w-[18ch] font-display text-[clamp(1.75rem,1.2rem+2vw,2.6rem)] font-medium tracking-tight text-ink">
+                Six stages, one continuous line.
+              </h2>
             </div>
-          </motion.div>
+            <p className="max-w-[34ch] text-graphite">
+              An agile approach that delivers working software each sprint —
+              scoped, built, and supported.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
+            {processSteps.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.step} className="border-t-2 border-ink py-6 pr-6">
+                  <div className="flex items-center justify-between font-mono text-[0.72rem]">
+                    <span className="text-accent">{step.step}</span>
+                    <span className="text-faint">{step.duration}</span>
+                  </div>
+                  <div className="mt-4 flex items-center gap-3">
+                    <Icon className="h-4 w-4 text-ink" strokeWidth={1.6} />
+                    <h3 className="font-display text-[1.1rem] font-medium text-ink">
+                      {step.title}
+                    </h3>
+                  </div>
+                  <p className="mt-2 text-[0.9rem] leading-relaxed text-graphite">
+                    {step.description}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= BENEFITS ================= */}
+      <section className="border-b border-line">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8 py-16 md:py-24">
+          <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] lowercase text-faint">
+                <span className="inline-block h-px w-3.5 bg-accent" />
+                what you get
+              </span>
+              <h2 className="mt-4 max-w-[18ch] font-display text-[clamp(1.75rem,1.2rem+2vw,2.6rem)] font-medium tracking-tight text-ink">
+                Software that holds up in production.
+              </h2>
+            </div>
+            <p className="max-w-[32ch] text-graphite">
+              The things we optimize for on every build — and the numbers we
+              hold ourselves to.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
+            {benefits.map((b, i) => {
+              const Icon = b.icon;
+              return (
+                <div key={b.title} className="border-b border-r border-line bg-white p-7">
+                  <Icon className="h-5 w-5 text-ink" strokeWidth={1.6} />
+                  <h3 className="mt-5 font-display text-[1.15rem] font-medium text-ink">
+                    {b.title}
+                  </h3>
+                  <p className="mt-2 text-[0.9rem] leading-relaxed text-graphite">
+                    {b.description}
+                  </p>
+                  <p className="mt-4 border-t border-line pt-3 font-mono text-[0.72rem] text-accent">
+                    → {b.metric}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CASE STUDIES ================= */}
+      <section className="border-b border-line">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8 py-16 md:py-24">
+          <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] lowercase text-faint">
+                <span className="inline-block h-px w-3.5 bg-accent" />
+                selected work
+              </span>
+              <h2 className="mt-4 max-w-[18ch] font-display text-[clamp(1.75rem,1.2rem+2vw,2.6rem)] font-medium tracking-tight text-ink">
+                Where we've shipped web platforms.
+              </h2>
+            </div>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,240px)_1fr]">
+            {/* index */}
+            <ul className="border border-line bg-white">
+              {caseStudies.map((c, i) => (
+                <li key={c.title}>
+                  <button
+                    onClick={() => setActiveCase(i)}
+                    className={`flex w-full items-baseline gap-3 border-b border-line px-4 py-4 text-left transition last:border-b-0 ${
+                      activeCase === i ? "bg-accent/5" : "hover:bg-paper"
+                    }`}
+                  >
+                    <span className={`font-mono text-[0.72rem] ${activeCase === i ? "text-accent" : "text-faint"}`}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="font-display text-[0.95rem] font-medium text-ink">
+                      {c.industry}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            {/* detail */}
+            <AnimatePresence mode="wait">
+              <motion.article
+                key={activeCase}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
+                className="border border-line bg-white p-8"
+              >
+                <span className="font-mono text-[0.72rem] text-accent">
+                  {caseStudies[activeCase].industry}
+                </span>
+                <h3 className="mt-3 font-display text-[clamp(1.35rem,1.1rem+0.8vw,1.75rem)] font-medium tracking-tight text-ink">
+                  {caseStudies[activeCase].title}
+                </h3>
+
+                <dl className="mt-6 grid gap-6 border-t border-line pt-6 md:grid-cols-3">
+                  <div>
+                    <dt className="font-mono text-[0.7rem] text-faint">challenge</dt>
+                    <dd className="mt-2 text-[0.9rem] leading-relaxed text-graphite">
+                      {caseStudies[activeCase].challenge}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-mono text-[0.7rem] text-faint">solution</dt>
+                    <dd className="mt-2 text-[0.9rem] leading-relaxed text-graphite">
+                      {caseStudies[activeCase].solution}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-mono text-[0.7rem] text-faint">results</dt>
+                    <dd className="mt-2 text-[0.9rem] leading-relaxed text-ink">
+                      {caseStudies[activeCase].results}
+                    </dd>
+                  </div>
+                </dl>
+
+                <div className="mt-6 flex flex-wrap gap-1.5 border-t border-line pt-5">
+                  {caseStudies[activeCase].technologies.map((t) => (
+                    <span key={t} className="border border-line-strong px-2 py-0.5 font-mono text-[0.68rem] text-graphite">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </motion.article>
+            </AnimatePresence>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FAQ ================= */}
+      <section className="border-b border-line">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8 py-16 md:py-24">
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.4fr] lg:gap-16">
+            <div>
+              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] lowercase text-faint">
+                <span className="inline-block h-px w-3.5 bg-accent" />
+                questions
+              </span>
+              <h2 className="mt-4 font-display text-[clamp(1.75rem,1.2rem+2vw,2.6rem)] font-medium leading-tight tracking-tight text-ink">
+                What clients usually ask.
+              </h2>
+              <p className="mt-4 max-w-[34ch] text-graphite">
+                Missing something? <button onClick={() => navigate("/contact")} className="border-b border-accent text-ink transition hover:text-accent">Send us a note.</button>
+              </p>
+            </div>
+
+            <div className="border-t border-line">
+              {faqs.map((f, i) => {
+                const open = openFAQ === i;
+                return (
+                  <div key={f.q} className="border-b border-line">
+                    <button
+                      onClick={() => setOpenFAQ(open ? null : i)}
+                      className="flex w-full items-center justify-between gap-6 py-5 text-left transition hover:text-accent"
+                      aria-expanded={open}
+                    >
+                      <span className="flex items-baseline gap-4">
+                        <span className={`font-mono text-[0.72rem] ${open ? "text-accent" : "text-faint"}`}>
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span className="font-display text-[1.02rem] font-medium text-ink">
+                          {f.q}
+                        </span>
+                      </span>
+                      {open ? (
+                        <Minus className="h-4 w-4 flex-none text-accent" />
+                      ) : (
+                        <Plus className="h-4 w-4 flex-none text-graphite" />
+                      )}
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {open && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="overflow-hidden"
+                        >
+                          <p className="max-w-[62ch] pb-6 pl-10 pr-6 text-[0.95rem] leading-relaxed text-graphite">
+                            {f.a}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CTA ================= */}
+      <section className="bg-ink text-paper">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8 py-16 md:py-24">
+          <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] lowercase text-[#9AA0AC]">
+            <span className="inline-block h-px w-3.5 bg-white" />
+            start a project
+          </span>
+          <h2 className="mt-5 max-w-[22ch] font-display text-[clamp(1.9rem,1.3rem+2.2vw,2.9rem)] font-medium leading-[1.08] tracking-tight text-paper">
+            Have a web project in mind? Let's scope it.
+          </h2>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <button
+              onClick={() => navigate("/contact")}
+              className="group inline-flex items-center gap-2 border border-paper bg-paper px-5 py-3.5 font-mono text-[0.82rem] font-medium text-ink transition hover:border-accent hover:bg-accent hover:text-white"
+            >
+              Book a free consultation
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </button>
+            <button
+              onClick={() => navigate("/cases")}
+              className="inline-flex items-center border border-[#3A3E48] px-5 py-3.5 font-mono text-[0.82rem] font-medium text-paper transition hover:border-paper"
+            >
+              See our work
+            </button>
+          </div>
         </div>
       </section>
     </div>
   );
-}
+};
 
 export default WebDevelopment;

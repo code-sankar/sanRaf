@@ -1,29 +1,34 @@
-import { Phone, MessageSquare } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const CTASection = () => {
   const navigate = useNavigate();
+
   return (
-    <section className="py-16 bg-gradient-to-r from-blue-700 to-blue-900 text-white">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6">
-          Ready to Build Your Next Software Solution?
+    <section className="font-body bg-ink text-paper">
+      <div className="max-w-[1180px] mx-auto px-5 sm:px-8 py-16 md:py-24">
+        <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] lowercase text-[#9AA0AC]">
+          <span className="inline-block h-px w-3.5 bg-white" />
+          start a project
+        </span>
+
+        <h2 className="mt-5 max-w-[20ch] font-display text-[clamp(1.9rem,1.3rem+2.2vw,2.9rem)] font-medium leading-[1.08] tracking-tight text-paper">
+          Tell us what you're building. We'll tell you how we'd ship it.
         </h2>
-        <p className="text-xl mb-8 max-w-3xl mx-auto text-blue-100">
-          Let’s discuss your project idea and turn it into a powerful, scalable
-          digital product with our expert development team.
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
+
+        <div className="mt-9 flex flex-wrap gap-3">
           <button
-            className="bg-white text-blue-800 hover:bg-blue-50 px-8 py-4 rounded-md font-semibold text-lg transition-all shadow-lg flex items-center gap-2"
             onClick={() => navigate("/contact")}
+            className="group inline-flex items-center gap-2 border border-paper bg-paper px-5 py-3.5 font-mono text-[0.82rem] font-medium text-ink transition hover:border-accent hover:bg-accent hover:text-white"
           >
-            <MessageSquare className="h-5 w-5" /> Book a Free Consultation
+            Book a free consultation
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
-          <button 
-          onClick={() => navigate("/whyUS")}
-          className="border-2 border-white text-white hover:bg-blue-800 px-8 py-4 rounded-md font-semibold text-lg transition-all">
-            Get in Touch
+          <button
+            onClick={() => navigate("/whyUs")}
+            className="inline-flex items-center border border-[#3A3E48] px-5 py-3.5 font-mono text-[0.82rem] font-medium text-paper transition hover:border-paper"
+          >
+            Get in touch
           </button>
         </div>
       </div>
