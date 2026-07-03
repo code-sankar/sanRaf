@@ -27,7 +27,7 @@ const nav = [
     ],
   },
   { name: "Technologies", href: "/tech" },
-  { name: "Blog", href: "/blog" },
+  //{ name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ];
 
