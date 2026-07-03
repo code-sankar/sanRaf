@@ -11,7 +11,6 @@ import {
 } from "react-router-dom";
 
 import App from "./App.jsx";
-import AIMachineLearning from "./pages/Our_services/ai_machine_learning.jsx";
 import Blockchain from "./pages/Our_services/blockchain.jsx";
 import CloudSolutions from "./pages/Our_services/cloud_solutions.jsx";
 import Cybersecurity from "./pages/Our_services/cybersecurity.jsx";
@@ -26,6 +25,9 @@ import Blogs from "./pages/Blogs.jsx";
 import Contact from "./pages/Contact.jsx";
 import Home from "./pages/Home.jsx";
 import WhyUs from "./pages/Our_services/WhyUs.jsx";
+import CaseStudies from "./pages/Portfolio/CaseStudies.jsx";
+import ClientProjects from "./pages/Portfolio/ClientProjects.jsx";
+import AIMachineLearning from "./pages/Our_services/ai_machine_learning.jsx";
 
 const router = createBrowserRouter([
   {
@@ -65,10 +67,6 @@ const router = createBrowserRouter([
         element: <CloudSolutions />,
       },
       {
-        path: "/ai",
-        element: <AIMachineLearning />,
-      },
-      {
         path: "/blockchain",
         element: <Blockchain />,
       },
@@ -91,6 +89,18 @@ const router = createBrowserRouter([
       {
         path: "/whyUs",
         element: <WhyUs />
+      },
+      {
+        path: "/cases",
+        element: <CaseStudies />
+      },
+      {
+        path: "/projects",
+        element: <ClientProjects />
+      },
+      {
+        path: "ai",
+        element: <AIMachineLearning />
       }
     ],
   },
