@@ -1,6 +1,6 @@
 import { React, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import ReactDOM from 'react-dom/client'
+import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import "./index.css";
 import {
@@ -28,6 +28,10 @@ import WhyUs from "./pages/Our_services/WhyUs.jsx";
 import CaseStudies from "./pages/Portfolio/CaseStudies.jsx";
 import ClientProjects from "./pages/Portfolio/ClientProjects.jsx";
 import AIMachineLearning from "./pages/Our_services/ai_machine_learning.jsx";
+import PrivacyPolicy from "./pages/FooterPages/PrivacyPolicy.jsx";
+import TermsOfService from "./pages/FooterPages/TermsOfService.jsx";
+import Disclaimer from "./pages/FooterPages/Disclaimer.jsx";
+import Sitemap from "./pages/FooterPages/Sitemap.jsx";
 
 const router = createBrowserRouter([
   {
@@ -88,20 +92,24 @@ const router = createBrowserRouter([
       },
       {
         path: "/whyUs",
-        element: <WhyUs />
+        element: <WhyUs />,
       },
       {
         path: "/cases",
-        element: <CaseStudies />
+        element: <CaseStudies />,
       },
       {
         path: "/projects",
-        element: <ClientProjects />
+        element: <ClientProjects />,
       },
       {
         path: "ai",
-        element: <AIMachineLearning />
-      }
+        element: <AIMachineLearning />,
+      },
+      { path: "/privacy-policy", element: <PrivacyPolicy /> },
+      { path: "/terms-of-service", element: <TermsOfService /> },
+      { path: "/disclaimer", element: <Disclaimer /> },
+      { path: "/sitemap", element: <Sitemap /> },
     ],
   },
   {
@@ -111,7 +119,5 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  
-    <RouterProvider router={router} />
-  
+  <RouterProvider router={router} />,
 );

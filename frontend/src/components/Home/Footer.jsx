@@ -17,6 +17,13 @@ const links = [
   ["Contact", "/contact"],
 ];
 
+const legalLinks = [
+  ["Privacy Policy",   "/privacy-policy"],
+  ["Terms of Service", "/terms-of-service"],
+  ["Disclaimer",       "/disclaimer"],
+  ["Sitemap",          "/sitemap"],
+];
+
 const Footer = () => {
   const year = new Date().getFullYear();
 
@@ -109,8 +116,10 @@ const Footer = () => {
         <div className="flex flex-col justify-between gap-3 border-t border-line py-6 font-mono text-[0.72rem] text-faint sm:flex-row">
           <p>© {year} Sankar &amp; Rafel Software Solutions. All rights reserved.</p>
           <div className="flex flex-wrap gap-5">
-            {["Privacy Policy", "Terms of Service", "Disclaimer", "Sitemap"].map((t) => (
-              <a key={t} href="#" className="transition hover:text-ink">{t}</a>
+            {legalLinks.map(([label, href]) => (
+              <Link key={label} to={href} className="transition hover:text-ink">
+                {label}
+              </Link>
             ))}
           </div>
         </div>
